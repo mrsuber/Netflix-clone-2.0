@@ -2,6 +2,7 @@ import './featured.scss'
 import cover from './cover.jpg'
 import cover2 from './Shang2.png'
 import {PlayArrow,InfoOutlined} from '@material-ui/icons'
+import {Link} from 'react-router-dom'
 
 export default function Featured({type}){
   return(
@@ -34,7 +35,7 @@ export default function Featured({type}){
           <div className="buttons">
             <button className="play">
               <PlayArrow />
-              <span>Play </span>
+              <span><Link to="/stream" className="link">Play</Link> </span>
             </button>
             <button className="more">
               <InfoOutlined />

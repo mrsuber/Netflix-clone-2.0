@@ -1,18 +1,27 @@
 import './register.scss'
 import logo from '../../components/navbar/logo.png'
 import {useState,useRef} from 'react'
+import { Link } from "react-router-dom";
+
+
 export default function Register(){
   const[email,setEmail]=useState('')
   const[password,setPassword]=useState('')
   const emailRef =useRef()
   const passwordRef =useRef()
+
   const handleStart =()=>{
     setEmail(emailRef.current.value)
   }
 
   const handleFinish =()=>{
     setPassword(passwordRef.current.value)
+    if(password){
+
+
+    }
   }
+
 
   return(
     <div className="register">
@@ -35,7 +44,7 @@ export default function Register(){
 
           ):( <form className="input">
               <input type="password" placeholder="password" ref={passwordRef} />
-              <button className="registerButton" onClick={()=>handleFinish()}>Start</button>
+              <button className="registerButton"><Link to="/home" className="link">Start</Link></button>
             </form>
           )
         }

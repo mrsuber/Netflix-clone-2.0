@@ -3,6 +3,7 @@ import cover from './movie.jpg'
 import {PlayArrow,Add,ThumbUpAltOutlined,ThumbDownAltOutlined} from '@material-ui/icons'
 import {useState} from 'react'
 import trailer from './movie2.mp4'
+import {Link} from 'react-router-dom'
 
 
 export default function ListItem({index}){
@@ -18,7 +19,7 @@ export default function ListItem({index}){
     <video src={trailer} autoPlay loop muted/>
     <div className="itemInfo">
         <div className='icons'>
-          <PlayArrow  className="icon"/>
+          <Link to="/stream" className="link"><PlayArrow  className="icon"/></Link>
           <Add  className="icon"/>
           <ThumbUpAltOutlined className="icon"/>
           <ThumbDownAltOutlined className="icon"/>
