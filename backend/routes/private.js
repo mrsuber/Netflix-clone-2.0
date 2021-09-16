@@ -15,7 +15,12 @@ const {
   deleteMovie,
   getAMovie,
   getAllMovie,
-  getRandomMovie
+  getRandomMovie,
+  createNewList,
+  updateList,
+  deleteList,
+  getAList,
+  getAllList
 } = require('../controllers/private')
 
 
@@ -34,6 +39,12 @@ router.route("/getamovie/:movieId").get(protect,getAMovie)
 router.route("/getallmovies").get(protect,isAdmin,getAllMovie)
 router.route("/getrandommovies").get(protect,getRandomMovie)
 
+//creat list for the homePage
+router.route("/createlist").post(protect,isAdmin,createNewList)
+router.route("/updatelist/:listId").put(protect,isAdmin,updateList)
+router.route("/deletelist/:listId").delete(protect,isAdmin,deleteList)
+router.route("/getalist/:listId").get(protect,getAList)
+router.route("/getalllists").get(protect,getAllList)
 
 //home  page route
 router.route("/home").get(protect,getPrivateData);

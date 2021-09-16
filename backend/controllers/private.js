@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Movie = require('../models/Movie')
+const List = require('../models/List')
 
 const bcrypt = require('bcryptjs')
 const ErrorResponse = require('../utils/errorResponse')
@@ -187,7 +188,7 @@ exports.getAMovie = async (req,res,next) =>{
 exports.getAllMovie = async (req,res,next) =>{
   try{
   const movie = await Movie.find()
-    res.status(200).json({success:true,data:movie})
+    res.status(200).json({success:true,data:movie.reverse()})
   }catch(error){next(error)}
 
 }
@@ -209,6 +210,70 @@ exports.getRandomMovie = async (req,res,next) =>{
       ])
     }
     res.status(200).json({success:true,data:movie})
+  }catch(error){next(error)}
+
+}
+
+//Create a createNewList
+exports.createNewList = async (req,res,next) =>{
+  try{
+    const newList = await List.create(req.body)
+    const saveList = await newList.save()
+    res.status(200).json({success:true, data:saveList})
+  }catch(error){next(error)}
+
+}
+
+//Update list
+exports.updateList = async (req,res,next) =>{
+  try{
+    const updateList = await List.findByIdAndUpdate({_id:(req.params.listId)},{$set:req.body},{new:true})
+    res.status(200).json({success:true,updateList})
+  }catch(error){next(error)}
+
+}
+
+//Delete list
+exports.deleteList = async (req,res,next) =>{
+  try{
+  await List.findByIdAndDelete((req.params.listId))
+    res.status(200).json({success:true,data:"List deleted"})
+  }catch(error){next(error)}
+
+}
+
+//Get A list
+exports.getAList = async (req,res,next) =>{
+  try{
+  const list = await List.findById({ _id: ObjectId(req.params.listId)})
+
+    res.status(200).json({success:true,data:list})
+  }catch(error){next(error)}
+
+}
+
+//Get all movie
+exports.getAllList = async (req,res,next) =>{
+  const typeQuery = req.query.type;
+  const genreQuery = req.query.genre;
+  let list = []
+  try{
+    if(typeQuery){
+      if(genreQuery){
+        list = await List.aggregate([
+          {$sample:{size:10}},
+          {$match:{type:typeQuery,genre:genreQuery}}
+        ])
+      }else{
+        list = await List.aggregate([
+          {$sample:{size:10}},
+          {$match:{type:typeQuery}}
+        ])
+      }
+    }else{
+       list = await List.aggregate([{$sample:{size:10}}])
+    }
+    res.status(200).json(list)
   }catch(error){next(error)}
 
 }
