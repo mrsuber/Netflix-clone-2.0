@@ -15,7 +15,7 @@ app.use(express.json())
 
 //connecting the routes
 app.use("/api/auth",authRoute)
-
+app.use('/api/private',require('./routes/private'))
 //Error unhandler(should be last piece of middleware)
 app.use(errorHandler)
 

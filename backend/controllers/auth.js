@@ -103,7 +103,7 @@ try{
     success:true,
     data:user
   })
-}catch(error){}
+}catch(error){next(error)}
 }
 //password reset done
 exports.resetpassword= async (req,res,next)=>{
@@ -137,5 +137,5 @@ exports.resetpassword= async (req,res,next)=>{
 
 const sendToken = (user,statusCode,res) =>{
   const token = user.getSignedToken()
-  res.status(statusCode).json({success:true,token})
+  res.status(statusCode).json({success:true,token,user})
 }
