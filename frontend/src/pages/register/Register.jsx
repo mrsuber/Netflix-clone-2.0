@@ -7,17 +7,22 @@ import { Link } from "react-router-dom";
 export default function Register(){
   const[email,setEmail]=useState('')
   const[password,setPassword]=useState('')
+  const[confirmPassword,setConfirmPassword]=useState('')
   const emailRef =useRef()
   const passwordRef =useRef()
+  const confirmPasswordRef =useRef()
 
   const handleStart =()=>{
     setEmail(emailRef.current.value)
   }
+  const handleAlmostDone =()=>{
+    setPassword(passwordRef.current.value)
+  }
 
   const handleFinish =()=>{
-    setPassword(passwordRef.current.value)
-    if(password){
-
+    setConfirmPassword(confirmPasswordRef.current.value)
+    if(password!==confirmPassword){
+      console.log("password dose not match")
 
     }
   }
@@ -42,10 +47,15 @@ export default function Register(){
               <button className="registerButton" onClick={()=>handleStart()}>Get Started</button>
             </div>
 
-          ):( <form className="input">
+          ): !password?( <form className="input">
               <input type="password" placeholder="password" ref={passwordRef} />
-              <button className="registerButton"><Link to="/home" className="link">Start</Link></button>
+              <button className="registerButton"onClick={()=>handleAlmostDone()}>Almost Done</button>
             </form>
+          ): !confirmPassword &&(
+            <form className="input">
+                <input type="password" placeholder="Confirm Password" ref={confirmPasswordRef} />
+                <button className="registerButton"onClick={()=>handleFinish()} >Start</button>
+              </form>
           )
         }
 
