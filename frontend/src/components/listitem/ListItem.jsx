@@ -19,7 +19,7 @@ export default function ListItem({index}){
     <video src={trailer} autoPlay loop muted/>
     <div className="itemInfo">
         <div className='icons'>
-          <Link to="/stream" className="link"><PlayArrow  className="icon"/></Link>
+          <Link to="/watch" className="link"><PlayArrow  className="icon"/></Link>
           <Add  className="icon"/>
           <ThumbUpAltOutlined className="icon"/>
           <ThumbDownAltOutlined className="icon"/>

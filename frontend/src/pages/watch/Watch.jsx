@@ -8,7 +8,7 @@ export default function Watch(){
     <div className="back">
 
       <ArrowBackOutlined />
-      <Link to="/home" className="link">
+      <Link to="/" className="link">
       Home
       </Link>
     </div>

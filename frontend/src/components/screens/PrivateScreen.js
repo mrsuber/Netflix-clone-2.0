@@ -1,11 +1,7 @@
-import './home.scss'
-import Navbar from '../../components/navbar/Navbar'
-import Featured from "../../components/featured/Featured"
-import List from '../../components/list/List'
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 
-const Home = ({history,type}) => {
+const PrivateScreen = ({history}) => {
   const [error,setError] =useState("")
   const [privateData,setPrivateData]=useState("");
 
@@ -43,25 +39,11 @@ const Home = ({history,type}) => {
     error? <span className="error-message">{error}</span>
     :
     <>
-
-
-      <div className="home">
-
-      <Navbar logoutHandler={logoutHandler}/>
-
-      <Featured type={type}/>
       <div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
       <button onClick={logoutHandler}>Logout</button>
-      <List />
-      <List />
-      <List />
-      <List />
-
-      </div>
     </>
-
 
   )
 }
 
-export default Home
+export default PrivateScreen

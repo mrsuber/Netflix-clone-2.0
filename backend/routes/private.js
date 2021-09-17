@@ -47,7 +47,7 @@ router.route("/getalist/:listId").get(protect,getAList)
 router.route("/getalllists").get(protect,getAllList)
 
 //home  page route
-router.route("/home").get(protect,getPrivateData);
+router.route("/").get(protect,getPrivateData);
 
 //Admin dashboaud route
 router.route("/adminDashbourd").get(protect,isAdmin,getAdminDashbourd);
