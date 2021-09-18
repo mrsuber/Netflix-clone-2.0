@@ -7,8 +7,20 @@ import axios from 'axios'
 
 const Home = ({history,type}) => {
   const [error,setError] =useState("")
-  const [privateData,setPrivateData]=useState("");
+  const [list,setList]=useState([])
+  const [genre,setGenre]=useState(null)
+  const [movieList,setMovieList]=useState([])
+  const [seriesList,setSeriesList]=useState([])
+  console.log("this is list with backtick",list)
+  function checktype(){
+     if(type){
+       if(genre){
+         return "?type="+type+"&&genre="+genre
+       }
 
+       return"?type="+type
+     }else return ""
+  }
   useEffect(()=>{
     if(!localStorage.getItem("authToken")){
       history.push("/login")
@@ -21,9 +33,10 @@ const Home = ({history,type}) => {
         }
       }
       try{
-        const {data} = await axios.get("/api/private",config)
+        // const {data} = await axios.get("/api/private",config)
+        const getallList = await axios.get("/api/private/getalllists"+checktype(),config)
 
-        setPrivateData(data.data)
+        setList(getallList.data)
 
       }catch(error){
 
@@ -50,8 +63,7 @@ const Home = ({history,type}) => {
       <Navbar logoutHandler={logoutHandler}/>
 
       <Featured type={type}/>
-      <div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
-      <button onClick={logoutHandler}>Logout</button>
+
       <List />
       <List />
       <List />
