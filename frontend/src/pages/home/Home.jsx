@@ -7,8 +7,20 @@ import axios from 'axios'
 
 const Home = ({history,type}) => {
   const [error,setError] =useState("")
-  const [privateData,setPrivateData]=useState("");
+  const [lists,setLists]=useState([])
+  const [genre,setGenre]=useState(null)
+  const [movieList,setMovieList]=useState([])
+  const [seriesList,setSeriesList]=useState([])
+console.log(lists)
+  function checktype(){
+     if(type){
+       if(genre){
+         return "?type="+type+"&&genre="+genre
+       }
 
+       return"?type="+type
+     }else return ""
+  }
   useEffect(()=>{
     if(!localStorage.getItem("authToken")){
       history.push("/login")
@@ -21,9 +33,10 @@ const Home = ({history,type}) => {
         }
       }
       try{
-        const {data} = await axios.get("/api/private",config)
-
-        setPrivateData(data.data)
+        // const {data} = await axios.get("/api/private",config)
+        const getallList = await axios.get("/api/private/getalllists"+checktype(),config)
+        // const getallList = await axios.get(`/api/private/getalllists${type?"?type="+type:""}${genre ? "&genre="+genre:""}`,config)
+        setLists(getallList.data)
 
       }catch(error){
 
@@ -33,7 +46,7 @@ const Home = ({history,type}) => {
     }
 
     fetchPrivateData()
-  },[history])
+  },[history,type,genre])
 
   const logoutHandler=()=>{
     localStorage.removeItem("authToken")
@@ -50,12 +63,11 @@ const Home = ({history,type}) => {
       <Navbar logoutHandler={logoutHandler}/>
 
       <Featured type={type}/>
-      <div style={{background:"green", color:"white"}}>PrivateData:{privateData}</div>
-      <button onClick={logoutHandler}>Logout</button>
-      <List />
-      <List />
-      <List />
-      <List />
+      {lists.map((list)=>(
+        <List list={list}/>
+      ))}
+
+
 
       </div>
     </>

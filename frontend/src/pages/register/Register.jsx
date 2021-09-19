@@ -1,31 +1,59 @@
 import './register.scss'
 import logo from '../../components/navbar/logo.png'
-import {useState,useRef} from 'react'
+import {useState,useRef,useEffect} from 'react'
 import { Link } from "react-router-dom";
+import axios from 'axios'
 
 
-export default function Register(){
+export default function Register({history}){
   const[email,setEmail]=useState('')
   const[password,setPassword]=useState('')
-  const[confirmPassword,setConfirmPassword]=useState('')
+  const [username,setUsername]=useState('')
+  const [error,setError]=useState('')
   const emailRef =useRef()
   const passwordRef =useRef()
-  const confirmPasswordRef =useRef()
+
 
   const handleStart =()=>{
     setEmail(emailRef.current.value)
+    setUsername(emailRef.current.value)
+      console.log("password",password,"email",email,"username",username)
   }
-  const handleAlmostDone =()=>{
+
+  useEffect(()=>{
+    if(localStorage.getItem("authToken")){
+      history.push("/")
+    }
+  },[history])
+
+  const registerHandler= async (e)=>{
     setPassword(passwordRef.current.value)
-  }
+    e.preventDefault()
+    console.log("password",password,"email",email,"username",username)
+    const config = {
+      header:{
+        "Content-Type":"application/json"
+      }
+    }
 
-  const handleFinish =()=>{
-    setConfirmPassword(confirmPasswordRef.current.value)
-    if(password!==confirmPassword){
-      console.log("password dose not match")
 
+    try{
+       const {data}= await axios.post("/api/auth/register",{username,email,password},config);
+       localStorage.setItem("authToken",data.token)
+       history.push("/")
+    }catch(error){
+      setError(error.response.data.error)
+        setTimeout(()=>{
+          setError("")
+        },5000)
     }
   }
+
+
+
+
+
+
 
 
   return(
@@ -40,24 +68,24 @@ export default function Register(){
         <h1>Unlimeted movies, Tv shows, and more</h1>
         <h2>Watch anywhere. Cancel anytime.</h2>
         <p>Ready to watch? enter your email to create or register your membership</p>
+        <span className="register-screen_subtext">Already have an account? <Link to="/login" className="link">Login</Link></span>
+        {error && <span className="error-message">{error}</span>}
         {
+
           !email ? (
             <div className="input">
-              <input type="email" placeholder="email address" ref={emailRef} />
+
+              <input type="email" required placeholder="email address"  onChange={(e) =>setEmail(e.target.value)} />
               <button className="registerButton" onClick={()=>handleStart()}>Get Started</button>
             </div>
 
-          ): !password?( <form className="input">
-              <input type="password" placeholder="password" ref={passwordRef} />
-              <button className="registerButton"onClick={()=>handleAlmostDone()}>Almost Done</button>
+          ):( <form className="input">
+              <input type="password" required placeholder="password"  onChange={(e) =>setPassword(e.target.value)} />
+              <button className="registerButton"onClick={()=>registerHandler()}>Start</button>
             </form>
-          ): !confirmPassword &&(
-            <form className="input">
-                <input type="password" placeholder="Confirm Password" ref={confirmPasswordRef} />
-                <button className="registerButton"onClick={()=>handleFinish()} >Start</button>
-              </form>
           )
         }
+
 
       </div>
     </div>

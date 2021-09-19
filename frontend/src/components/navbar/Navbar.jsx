@@ -4,17 +4,14 @@ import {Search,Notifications,ArrowDropDown} from '@material-ui/icons'
 import React ,{useState} from 'react'
 import avatar from './mohamad.jpg'
 import {Link} from "react-router-dom"
-const Navbar = ({history}) => {
+const Navbar = ({logoutHandler}) => {
   const [isScrolled,setIsScrolled]=useState(false)
   window.onscroll =()=>{
     setIsScrolled(window.pageYOffset===0?false:true)
     return ()=>(window.onscroll=null);
   }
 
-  const logoutHandler=()=>{
-    localStorage.removeItem("authToken")
-    history.push("/login")
-  }
+
 
   return (
     <div className={isScrolled?"navbar scrolled" : "navbar"}>
@@ -45,7 +42,7 @@ const Navbar = ({history}) => {
       <ArrowDropDown className="icon"/>
       <div className="options">
         <span>Settings</span>
-        <span OnClick={logoutHandler}>Logout</span>
+        <span onClick={logoutHandler}>Logout</span>
       </div>
       </div>
 

@@ -6,7 +6,7 @@ import trailer from './movie2.mp4'
 import {Link} from 'react-router-dom'
 
 
-export default function ListItem({index}){
+export default function ListItem({index,item}){
   const [isHovered,setIsHovered]=useState(false)
   return(
     <div className="listItem"
