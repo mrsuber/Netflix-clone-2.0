@@ -7,11 +7,11 @@ import axios from 'axios'
 
 const Home = ({history,type}) => {
   const [error,setError] =useState("")
-  const [list,setList]=useState([])
+  const [lists,setLists]=useState([])
   const [genre,setGenre]=useState(null)
   const [movieList,setMovieList]=useState([])
   const [seriesList,setSeriesList]=useState([])
-  console.log("this is list with backtick",list)
+console.log(lists)
   function checktype(){
      if(type){
        if(genre){
@@ -35,8 +35,8 @@ const Home = ({history,type}) => {
       try{
         // const {data} = await axios.get("/api/private",config)
         const getallList = await axios.get("/api/private/getalllists"+checktype(),config)
-
-        setList(getallList.data)
+        // const getallList = await axios.get(`/api/private/getalllists${type?"?type="+type:""}${genre ? "&genre="+genre:""}`,config)
+        setLists(getallList.data)
 
       }catch(error){
 
@@ -46,7 +46,7 @@ const Home = ({history,type}) => {
     }
 
     fetchPrivateData()
-  },[history])
+  },[history,type,genre])
 
   const logoutHandler=()=>{
     localStorage.removeItem("authToken")
@@ -63,11 +63,11 @@ const Home = ({history,type}) => {
       <Navbar logoutHandler={logoutHandler}/>
 
       <Featured type={type}/>
+      {lists.map((list)=>(
+        <List list={list}/>
+      ))}
 
-      <List />
-      <List />
-      <List />
-      <List />
+
 
       </div>
     </>
