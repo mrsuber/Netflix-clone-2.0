@@ -24,14 +24,10 @@ export default function List({list}){
     <div className="list">
       <span className="listTitle">{list.title}</span>
       <div className="wrapper">
-        <ArrowBackIosOutlined
-        className="sliderArrow left"
-        onClick={()=>handleClick("left")}
-        style={{display:!isMoved &&"none"}}
-        />
+        <ArrowBackIosOutlined  className="sliderArrow left"   onClick={()=>handleClick("left")}  style={{display:!isMoved &&"none"}} />
         <div className ="container" ref={listRef}>
         {list.content.map((item,i)=>(
-          <ListItem index={i}/>
+          <ListItem index={i} item={item}/>
         ))}
 
         </div>

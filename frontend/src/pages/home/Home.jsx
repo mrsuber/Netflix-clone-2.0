@@ -11,14 +11,24 @@ const Home = ({history,type}) => {
   const [genre,setGenre]=useState(null)
   const [movieList,setMovieList]=useState([])
   const [seriesList,setSeriesList]=useState([])
-console.log(lists)
+  console.log("type",type)
+
   function checktype(){
+
+
+      let type2= ""
+      if(type && type==="series"){
+        type2="Series"
+      }
+      if(type && type==="movie"){
+        type2="Movie"
+      }
      if(type){
        if(genre){
-         return "?type="+type+"&&genre="+genre
+         return "?type="+type2+"&&genre="+genre
        }
 
-       return"?type="+type
+       return"?type="+type2
      }else return ""
   }
   useEffect(()=>{
