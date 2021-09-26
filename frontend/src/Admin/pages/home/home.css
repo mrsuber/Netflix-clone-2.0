@@ -1,0 +1,7 @@
+.admin-home{
+  flex: 4;
+}
+.admin-homeWidgets{
+  display: flex;
+  margin: 20px;
+}
