@@ -41,7 +41,7 @@ const Navbar = ({logoutHandler}) => {
       <div className="profile">
       <ArrowDropDown className="icon"/>
       <div className="options">
-        <span>Settings</span>
+        <Link to="/admin" className="link"><span>Dashbourd</span></Link>
         <span onClick={logoutHandler}>Logout</span>
       </div>
       </div>
